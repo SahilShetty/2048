@@ -16,13 +16,13 @@ def push(first, scape, ending, nextVal, repeat): # scape = landscape (horizontal
 
 	for same in ending:
 
-		if scape[same] == scape[same + nextVal] and scape[same] != 0:
+		if scape[same] == scape[same + nextVal] and scape[same] != 0 and first:
 
 			scape[same] *= 2
 
 			scape[same + nextVal] = 0
 
-	if first: push(False, scape, ending, nextVal, 0) # repetition will occur if first = True always - example [64, 4, 2, 2] would equal [64, 8, 0, 0]
+	if first: push(False, scape, ending, nextVal, 0) # multiple incrementation will occur if first is always True - example [64, 4, 2, 2] would equal [64, 8, 0, 0]
 
 	return scape
 
