@@ -22,7 +22,7 @@ def push(first, scape, ending, nextVal, repeat): # scape = landscape (horizontal
 
 			scape[same + nextVal] = 0
 
-	if first: push(False, scape, ending, nextVal, 0) # multiple incrementation will occur if first is always True - example [64, 4, 2, 2] would equal [64, 8, 0, 0]
+	if first: push(False, scape, ending, nextVal, 0) # repetition will occur if first = True always - example [64, 4, 2, 2] would equal [64, 8, 0, 0]
 
 	return scape
 
@@ -61,12 +61,10 @@ def horizontal(ending_and_nextVal):
 	tiles = fill
 
 
-# example tile -	
-
 tiles = [
 [64,	64,		0,		0],
-[2,	2,		4,		4],
-[2,	2,		0,		8],
+[2,		2,		4,		4],
+[2,		2,		0,		8],
 [64,	4,		0,		8]
 ]
 
@@ -100,8 +98,14 @@ while True:
 
 		display = list(map(str, display))
 
-		print '	|'.join(display)
+		for null in range(4):
+
+			if display[null] == '0': display[null] = ''
+
+		print '|	' + '	|	'.join(display) + '\n'
 
 	direction = raw_input('Direction: ')
 
 	function[direction](arguments[direction])
+
+	print '\n\n'
