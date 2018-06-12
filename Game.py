@@ -103,4 +103,3 @@ while True:
 	direction = raw_input('Direction: ')
 
 	function[direction](arguments[direction])
-'''
