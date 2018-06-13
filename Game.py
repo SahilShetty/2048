@@ -72,8 +72,6 @@ def newTile(four): # possibility of getting four
 
 	spawn = random.randint(1, 16) # Where to spawn next tile
 
-	print str(spawn) + '\n'
-
 	'''
 	Assuming each tile had its own number (first tile has number 1, second tile has number 2... last tile has number 16), the last tile of each row is a multiple of 4 and
 	and everything before in that row is less than that multiple, however, greater than the previous multiple. If we divide the spawn by 4, then we get a whole number for
