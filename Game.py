@@ -1,3 +1,8 @@
+import random
+
+from math import ceil
+
+
 def push(first, scape, ending, nextVal, repeat): # scape = landscape (horizontal and vertical) - pun
 
 	for zero in ending:
@@ -61,12 +66,38 @@ def horizontal(ending_and_nextVal):
 	tiles = fill
 
 
-tiles = [
-[64,	64,		0,		0],
-[2,		2,		4,		4],
-[2,		2,		0,		8],
-[64,	4,		0,		8]
-]
+def newTile(four):
+
+	global tiles
+
+	spawn = random.randint(1, 16) # Where to spawn next tile
+
+	print str(spawn) + '\n'
+
+	'''
+	Assuming each tile had its own number (first tile has number 1, second tile has number 2... last tile has number 16), the last tile of each row is a multiple of 4 and
+	and everything before in that row is less than that multiple, however, greater than the previous multiple. If we divide the spawn by 4, then we get a whole number for
+	the last tile and slightly smaller numbers for the first 3 (still greater than the previous row). Therefore, if I ceiling round the number, we will get the row number.
+	But since list index start with zero, I must minus by 1.
+	'''
+
+	index = int(ceil(spawn / float(4) - 1))
+
+	# spawn - index * 4 - 1 converts the number assigned to each tile into values from 0 to 3. Therefore, after the row is found, the exact value can be found.
+
+	replace = tiles[index][spawn - index * 4 - 1]
+
+	possible = 95/float(929)
+
+	if replace != 0: newTile(four)
+
+	elif 95/float(929) >= four: tiles[index][spawn - index * 4 - 1] = 4
+
+	elif 95/float(929) < four: tiles[index][spawn - index * 4 - 1] = 2
+
+
+
+tiles = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
 
 function = {
 
@@ -92,7 +123,11 @@ arguments = {
 
 }
 
+newTile(random.random())
+
 while True:
+
+	newTile(random.random())
 
 	for display in tiles:
 
