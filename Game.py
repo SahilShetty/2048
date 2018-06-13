@@ -66,7 +66,7 @@ def horizontal(ending_and_nextVal):
 	tiles = fill
 
 
-def newTile(four):
+def newTile(four): # possibility of getting four
 
 	global tiles
 
@@ -87,13 +87,13 @@ def newTile(four):
 
 	replace = tiles[index][spawn - index * 4 - 1]
 
-	possible = 95/float(929)
+	possible = 95/float(929) # possibility of spawning four
 
 	if replace != 0: newTile(four)
 
-	elif 95/float(929) >= four: tiles[index][spawn - index * 4 - 1] = 4
+	elif 95/float(929) <= four: tiles[index][spawn - index * 4 - 1] = 4
 
-	elif 95/float(929) < four: tiles[index][spawn - index * 4 - 1] = 2
+	elif 95/float(929) > four: tiles[index][spawn - index * 4 - 1] = 2
 
 
 
