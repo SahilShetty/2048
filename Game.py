@@ -47,7 +47,7 @@ def vertical(ending_and_nextVal):
 
 	for index1 in range(4):
 
-		for row in tiles: column[index1].append(row[index1])
+		for rows in tiles: column[index1].append(rows[index1])
 
 		sPush(column[index1], ending, nextVal)
 
@@ -66,7 +66,7 @@ def horizontal(ending_and_nextVal):
 
 	(ending, nextVal) = ending_and_nextVal
 
-	for row in range(4): fill.append(sPush(tiles[row], ending, nextVal))
+	for rows in range(4): fill.append(sPush(tiles[rows], ending, nextVal))
 
 	tiles = fill
 
@@ -99,7 +99,31 @@ def newTile(four):
 	elif 95 / float(929) < four: tiles[index][spawn - index * 4 - 1] = 2
 
 
-tiles = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
+def movement(group4): # checking if any moves are possible; the group of 4s i.e - rows or columns
+
+	global same
+
+	for check in group4:
+
+		for numbers in range(3):
+
+			if check[numbers] == check[numbers + 1]: same += 1
+
+
+def output():
+
+	for display in tiles:
+
+		display = list(map(str, display))
+
+		for null in range(4):
+
+			if display[null] == '0': display[null] = ''
+
+		print '|	' + '	|	'.join(display) + '\n'
+
+
+tiles = [[2, 4, 8, 16], [32, 64, 128, 256], [512, 1024, 2048, 2], [4, 8, 0, 0]]
 
 function = {
 
@@ -129,28 +153,42 @@ newTile(random.random()); newTile(random.random()) # game spawns 2 tiles at the 
 
 while True:
 
-	prev = [[], [], [], []]
+	zero = False
+
+	zero_num = same = 0 # zero_num = the amount of rows/columns that have no 0s
+
+	prev = [[], [], [], []] # cannot reference prev and column as same object because lists are mutable so re-assignement changes both of them
+
+	columns = [[], [], [], []]
 
 	for rows in range(4):
 
-		for number in tiles[rows]: prev[rows].append(number) # I can't just do prev = tiles[: ] because tiles is a gloabal vaiable
+		for numbers in tiles[rows]: prev[rows].append(numbers) # I can't just do prev = tiles[: ] because tiles is a gloabal vaiable
 
-	for display in tiles:
-
-		display = list(map(str, display))
-
-		for null in range(4):
-
-			if display[null] == '0': display[null] = ''
-
-		print '|	' + '	|	'.join(display) + '\n'
+	output()
 
 	direction = raw_input('Direction: ')
 
 	function[direction](arguments[direction])
 
+	for index in range(4):
+
+		for rows in tiles: columns[index].append(rows[index])
+
 	if prev != tiles: newTile(random.random()) # to check for any change
+
+	movement(columns)
+
+	movement(tiles)
+
+	for check in tiles:
+
+		if 0 not in check: zero_num += 1
+
+	if zero_num == 4 and same == 0: break
 
 	print '\n\n'
 
-print '\n\n' + 'Sorry! You lost!'
+output()
+
+print '\n\n' + 'Sorry, you lost!'
