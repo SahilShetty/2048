@@ -3,7 +3,9 @@ import random
 from math import ceil
 
 
-def push(first, scape, ending, nextVal, repeat): # scape = landscape (horizontal and vertical) - pun
+def zPush(scape, ending, nextVal, repeat = 0): # zPush = Zero Push; scape = landscape (horizontal and vertical) - pun
+
+	repeat += 1
 
 	for zero in ending:
 
@@ -13,21 +15,24 @@ def push(first, scape, ending, nextVal, repeat): # scape = landscape (horizontal
 
 			scape[zero + nextVal] = 0
 
-			repeat += 1
+	if repeat <= 4: zPush(scape, ending, nextVal, repeat)
 
-			if repeat < 5: push(first, scape, ending, nextVal, repeat)
+	return scape
 
-	repeat = 0
+
+def sPush(scape, ending, nextVal): # sPush = Same Push
+
+	scape = zPush(scape, ending, nextVal)
 
 	for same in ending:
 
-		if scape[same] == scape[same + nextVal] and scape[same] != 0 and first:
+		if scape[same] == scape[same + nextVal] and scape[same] != 0:
 
 			scape[same] *= 2
 
 			scape[same + nextVal] = 0
 
-	if first: push(False, scape, ending, nextVal, 0) # repetition will occur if first = True always - example [64, 4, 2, 2] would equal [64, 8, 0, 0]
+	scape = zPush(scape, ending, nextVal)
 
 	return scape
 
@@ -44,7 +49,7 @@ def vertical(ending_and_nextVal):
 
 		for row in tiles: column[index1].append(row[index1])
 
-		push(True, column[index1], ending, nextVal, 0)
+		sPush(column[index1], ending, nextVal)
 
 	tiles = [[], [], [], []]
 
@@ -61,12 +66,12 @@ def horizontal(ending_and_nextVal):
 
 	(ending, nextVal) = ending_and_nextVal
 
-	for row in range(4): fill.append(push(True, tiles[row], ending, nextVal, 0))
+	for row in range(4): fill.append(sPush(tiles[row], ending, nextVal))
 
 	tiles = fill
 
 
-def newTile(four): # possibility of getting four
+def newTile(four):
 
 	global tiles
 
@@ -85,13 +90,13 @@ def newTile(four): # possibility of getting four
 
 	replace = tiles[index][spawn - index * 4 - 1]
 
-	possible = 95/float(929) # possibility of spawning four
+	possible = 95 / float(929) # probibility of getting a 4 out of one
 
 	if replace != 0: newTile(four)
 
-	elif 95/float(929) <= four: tiles[index][spawn - index * 4 - 1] = 4
+	elif 95 / float(929) >= four: tiles[index][spawn - index * 4 - 1] = 4
 
-	elif 95/float(929) > four: tiles[index][spawn - index * 4 - 1] = 2
+	elif 95 / float(929) < four: tiles[index][spawn - index * 4 - 1] = 2
 
 
 
@@ -121,11 +126,15 @@ arguments = {
 
 }
 
-newTile(random.random())
+newTile(random.random()); newTile(random.random()) # game spawns 2 tiles at the beginning
 
 while True:
 
-	newTile(random.random())
+	prev = [[], [], [], []]
+
+	for rows in range(4):
+
+		for number in tiles[rows]: prev[rows].append(number) # I can't just do prev = tiles[: ] because tiles is a gloabal vaiable
 
 	for display in tiles:
 
@@ -141,4 +150,8 @@ while True:
 
 	function[direction](arguments[direction])
 
+	if prev != tiles: newTile(random.random()) # to check for any change
+
 	print '\n\n'
+
+print '\n\n' + 'Sorry! You lost!'
