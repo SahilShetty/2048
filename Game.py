@@ -1,5 +1,7 @@
 import random
 
+from os import system
+
 from math import ceil
 
 
@@ -123,6 +125,8 @@ def output():
 		print '|	' + '	|	'.join(display) + '\n'
 
 
+system('cls')
+
 tiles = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
 
 function = {
@@ -152,6 +156,8 @@ arguments = {
 newTile(random.random()); newTile(random.random()) # game spawns 2 tiles at the beginning
 
 while True:
+
+	print '\n\n'
 
 	zero = False
 
@@ -187,7 +193,7 @@ while True:
 
 	if zero_num == 4 and same == 0: break
 
-	print '\n\n'
+	system('cls')
 
 output()
 
