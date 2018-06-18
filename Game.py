@@ -99,7 +99,6 @@ def newTile(four):
 	elif 95 / float(929) < four: tiles[index][spawn - index * 4 - 1] = 2
 
 
-
 tiles = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
 
 function = {
