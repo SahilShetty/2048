@@ -1,4 +1,4 @@
-import random
+from random import randint, random
 
 from msvcrt import getch
 
@@ -79,7 +79,7 @@ def newTile(four):
 
 	global tiles
 
-	spawn = random.randint(1, 16) # Where to spawn next tile
+	spawn = randint(1, 16) # Where to spawn next tile
 
 	'''
 	Assuming each tile had its own number (first tile has number 1, second tile has number 2... last tile has number 16), the last tile of each row is a multiple of 4 and
@@ -155,7 +155,7 @@ arguments = {
 
 }
 
-newTile(random.random()); newTile(random.random()) # game spawns 2 tiles at the beginning
+newTile(random()); newTile(random()) # game spawns 2 tiles at the beginning
 
 while True:
 
@@ -185,7 +185,7 @@ while True:
 
 		for rows in tiles: columns[index].append(rows[index])
 
-	if prev != tiles: newTile(random.random()) # to check for any change
+	if prev != tiles: newTile(random()) # to check for any change
 
 	movement(columns)
 
