@@ -1,5 +1,7 @@
 import random
 
+from msvcrt import getch
+
 from os import system
 
 from math import ceil
@@ -131,25 +133,25 @@ tiles = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
 
 function = {
 
-'up': vertical,
+'w': vertical, # up
 
-'down': vertical,
+'s': vertical, # down
 
-'left': horizontal,
+'a': horizontal, # left
 
-'right': horizontal
+'d': horizontal # right
 
 }
 
 arguments = {
 	
-'up': (range(3), + 1),
+'w': (range(3), + 1),
 
-'down': (range(3, 0, - 1), - 1),
+'s': (range(3, 0, - 1), - 1),
 
-'left': (range(3), + 1),
+'a': (range(3), + 1),
 
-'right': (range(3, 0, - 1), - 1)
+'d': (range(3, 0, - 1), - 1)
 
 }
 
@@ -173,7 +175,9 @@ while True:
 
 	output()
 
-	direction = raw_input('Direction: ')
+	print 'Direction:'
+
+	direction = getch()
 
 	function[direction](arguments[direction])
 
@@ -194,6 +198,8 @@ while True:
 	if zero_num == 4 and same == 0: break
 
 	system('cls')
+
+system('cls')
 
 output()
 
