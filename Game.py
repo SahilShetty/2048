@@ -1,10 +1,10 @@
 from random import randint, random
 
-from msvcrt import getch
+from math import ceil
 
 from os import system
 
-from math import ceil
+from msvcrt import getch
 
 
 def zPush(scape, ending, nextVal, repeat = 0): # zPush = Zero Push; scape = landscape (horizontal and vertical) - pun
@@ -94,7 +94,7 @@ def newTile(four):
 
 	replace = tiles[index][spawn - index * 4 - 1]
 
-	possible = 95 / float(929) # probibility of getting a 4 out of one
+	# 95 / float(929) probibility of getting a 4 out of one
 
 	if replace != 0: newTile(four)
 
@@ -200,6 +200,8 @@ while True:
 	system('cls')
 
 system('cls')
+
+print '\n\n'
 
 output()
 
