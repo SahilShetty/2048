@@ -1,9 +1,6 @@
 from random import randint, random
-
 from math import ceil
-
 from os import system
-
 from msvcrt import getch
 
 
@@ -12,11 +9,8 @@ def zPush(scape, ending, nextVal, repeat = 0): # zPush = Zero Push; scape = land
 	repeat += 1
 
 	for zero in ending:
-
 		if scape[zero] == 0:
-
 			scape[zero] = scape[zero + nextVal]
-
 			scape[zero + nextVal] = 0
 
 	if repeat <= 4: zPush(scape, ending, nextVal, repeat)
@@ -29,11 +23,8 @@ def sPush(scape, ending, nextVal): # sPush = Same Push
 	scape = zPush(scape, ending, nextVal)
 
 	for same in ending:
-
 		if scape[same] == scape[same + nextVal] and scape[same] != 0:
-
 			scape[same] *= 2
-
 			scape[same + nextVal] = 0
 
 	scape = zPush(scape, ending, nextVal)
@@ -46,19 +37,15 @@ def vertical(ending_and_nextVal):
 	global tiles
 
 	column = [[], [], [], []]
-
 	(ending, nextVal) = ending_and_nextVal
 
 	for index1 in range(4):
-
 		for rows in tiles: column[index1].append(rows[index1])
-
 		sPush(column[index1], ending, nextVal)
 
 	tiles = [[], [], [], []]
 
 	for index2 in range(4):
-
 		for display in column: tiles[index2].append(display[index2])
 
 
@@ -67,7 +54,6 @@ def horizontal(ending_and_nextVal):
 	global tiles
 
 	fill = [] # fill = fill in for tiles
-
 	(ending, nextVal) = ending_and_nextVal
 
 	for rows in range(4): fill.append(sPush(tiles[rows], ending, nextVal))
@@ -78,7 +64,7 @@ def horizontal(ending_and_nextVal):
 def newTile(four):
 
 	global tiles
-
+	
 	spawn = randint(1, 16) # Where to spawn next tile
 
 	'''
@@ -97,9 +83,7 @@ def newTile(four):
 	# 95 / float(929) probibility of getting a 4 out of one
 
 	if replace != 0: newTile(four)
-
 	elif 95 / float(929) >= four: tiles[index][spawn - index * 4 - 1] = 4
-
 	elif 95 / float(929) < four: tiles[index][spawn - index * 4 - 1] = 2
 
 
@@ -108,87 +92,67 @@ def movement(group4): # checking if any moves are possible; the group of 4s i.e 
 	global same
 
 	for check in group4:
-
 		for numbers in range(3):
-
 			if check[numbers] == check[numbers + 1]: same += 1
 
 
 def output():
 
 	for display in tiles:
-
+		
 		display = list(map(str, display))
 
 		for null in range(4):
-
 			if display[null] == '0': display[null] = ''
-
+				
 		print '|	' + '	|	'.join(display) + '\n'
 
 
 system('cls')
 
 tiles = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
-
 function = {
-
 'w': vertical, # up
-
 's': vertical, # down
-
 'a': horizontal, # left
-
 'd': horizontal # right
-
 }
 
 arguments = {
-	
 'w': (range(3), + 1),
-
 's': (range(3, 0, - 1), - 1),
-
 'a': (range(3), + 1),
-
 'd': (range(3, 0, - 1), - 1)
-
 }
 
-newTile(random()); newTile(random()) # game spawns 2 tiles at the beginning
+newTile(random()) # game spawns 2 tiles at the beginning
+newTile(random())
 
 while True:
 
 	print '\n\n'
 
 	zero = False
-
 	zero_num = same = 0 # zero_num = the amount of rows/columns that have no 0s
-
 	prev = [[], [], [], []] # cannot reference prev and column as same object because lists are mutable so re-assignement changes both of them
-
 	columns = [[], [], [], []]
 
 	for rows in range(4):
-
 		for numbers in tiles[rows]: prev[rows].append(numbers) # I can't just do prev = tiles[: ] because tiles is a gloabal vaiable
 
 	output()
-
 	print 'Direction:'
-
+	
 	direction = getch()
-
+	
 	function[direction](arguments[direction])
 
 	for index in range(4):
-
 		for rows in tiles: columns[index].append(rows[index])
 
 	if prev != tiles: newTile(random()) # to check for any change
 
 	movement(columns)
-
 	movement(tiles)
 
 	for check in tiles:
@@ -200,9 +164,6 @@ while True:
 	system('cls')
 
 system('cls')
-
 print '\n\n'
-
 output()
-
 print '\n\n' + 'Sorry, you lost!'
